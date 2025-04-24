@@ -23,12 +23,22 @@ export default function Home() {
     saveLastInteraction();
   };
 
+  const tidurKarakter = () => {
+    setStatus('Tidur 😴');
+    saveLastInteraction();
+
+    // Setelah 8 detik, ubah status jadi Lapar
+    setTimeout(() => {
+      setStatus('Lapar');
+    }, 8000);
+  };
+
   useEffect(() => {
     const last = localStorage.getItem('lastInteraction');
     if (last) {
       const now = Date.now();
       const selisih = now - parseInt(last);
-      const tigaJam = 3 * 60 * 60 * 1000; // 3 jam dalam ms
+      const tigaJam = 3 * 60 * 60 * 1000;
 
       if (selisih >= tigaJam) {
         setStatus('Lapar');
@@ -51,7 +61,7 @@ export default function Home() {
         status={status}
       />
 
-      <div className="mt-6 space-x-4">
+      <div className="mt-6 space-x-4 flex flex-wrap justify-center">
         <button
           onClick={beriMakan}
           className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow"
@@ -63,6 +73,12 @@ export default function Home() {
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow"
         >
           Latih Karakter 🛡️
+        </button>
+        <button
+          onClick={tidurKarakter}
+          className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow"
+        >
+          Tidur 😴
         </button>
       </div>
     </div>
