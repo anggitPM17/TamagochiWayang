@@ -4,6 +4,7 @@ import Karakter from '../components/Karakter';
 export default function Home() {
   const [status, setStatus] = useState('Lapar');
   const [isMuted, setIsMuted] = useState(false);
+  const [level, setLevel] = useState(1); // State untuk level karakter
 
   const karakterData = {
     nama: 'Bima',
@@ -17,11 +18,13 @@ export default function Home() {
   const beriMakan = () => {
     setStatus('Kenyang 🍽️');
     saveLastInteraction();
+    increaseLevel(); // Naikkan level saat diberi makan
   };
 
   const latihKarakter = () => {
     setStatus('Berlatih 🥋');
     saveLastInteraction();
+    increaseLevel(); // Naikkan level saat dilatih
   };
 
   const tidurKarakter = () => {
@@ -34,8 +37,14 @@ export default function Home() {
     }, 8000);
   };
 
+  const increaseLevel = () => {
+    if (level < 5) { // Batas level maksimal adalah 5
+      setLevel(level + 1);
+    }
+  };
+
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    setIsMuted(!isMuted); // Mengubah state mute/unmute
   };
 
   useEffect(() => {
@@ -54,7 +63,7 @@ export default function Home() {
         }, sisaWaktu);
       }
     }
-  }, []);
+  }, [level]); // Dependensi pada level untuk mengupdate status
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gunung bg-cover bg-center bg-no-repeat bg-fixed">
@@ -64,7 +73,7 @@ export default function Home() {
       <audio
         autoPlay
         loop
-        muted={isMuted}
+        muted={isMuted} // Kondisi mute sesuai state
         className="absolute top-0 left-0 w-full h-full z-0"
       >
         <source src="/music/gamelan.mp3" type="audio/mp3" />
@@ -84,6 +93,11 @@ export default function Home() {
           gambar={karakterData.gambar}
           status={status}
         />
+
+        {/* Tampilkan level karakter */}
+        <div className="text-lg font-bold text-gray-800 mt-4">
+          Level: {level} {level === 5 ? "🎉 Maksimal!" : ""}
+        </div>
 
         <div className="mt-6 space-x-4 flex flex-wrap justify-center">
           <button
