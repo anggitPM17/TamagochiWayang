@@ -3,6 +3,7 @@ import Karakter from '../components/Karakter';
 
 export default function Home() {
   const [status, setStatus] = useState('Lapar');
+  const [isMuted, setIsMuted] = useState(false);
 
   const karakterData = {
     nama: 'Bima',
@@ -33,6 +34,10 @@ export default function Home() {
     }, 8000);
   };
 
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+  };
+
   useEffect(() => {
     const last = localStorage.getItem('lastInteraction');
     if (last) {
@@ -54,6 +59,18 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gunung bg-cover bg-center bg-no-repeat bg-fixed">
       <div className="backdrop-blur-md bg-white/70 w-full h-full absolute z-0"></div>
+
+      {/* Musik Gamelan */}
+      <audio
+        autoPlay
+        loop
+        muted={isMuted}
+        className="absolute top-0 left-0 w-full h-full z-0"
+      >
+        <source src="/music/gamelan.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+
       <div className="relative z-10 p-4 rounded-xl shadow-lg">
         <h1 className="text-5xl font-bold font-jawa mb-4 text-yellow-800">
           ꦠꦩꦒꦺꦴꦕꦶ ꦮꦪꦁ
@@ -88,6 +105,14 @@ export default function Home() {
             Tidur 😴
           </button>
         </div>
+
+        {/* Tombol mute/unmute */}
+        <button
+          onClick={toggleMute}
+          className="absolute top-4 right-4 bg-black text-white p-2 rounded-full"
+        >
+          {isMuted ? "Unmute" : "Mute"}
+        </button>
       </div>
     </div>
   );
