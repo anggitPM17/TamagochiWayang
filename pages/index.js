@@ -53,7 +53,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/background.jpg')" }}>
-      <h1 className="text-4xl font-bold mb-8 text-gray-800">Tamagotchi Wayang</h1>
+      <h1 className="text-5xl font-bold font-jawa mb-4 text-yellow-800">
+      ꦠꦩꦒꦺꦴꦕꦶ ꦮꦪꦁ
+    </h1>
+      <p className="text-lg font-lora text-gray-800">
+      Tamagotchi Wayang
+    </p>
+
       
       <Karakter
         nama={karakterData.nama}
